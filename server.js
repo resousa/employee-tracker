@@ -226,7 +226,7 @@ const updateEmployeeRole = () => {
       {
         name: "roleID",
         type: "input",
-        message: "Which role ID would you like to update to?"
+        message: "Please enter the new role ID."
       }
     ])
     .then(res => {
@@ -237,10 +237,45 @@ const updateEmployeeRole = () => {
         [res.roleID, res.employeeFirst, res.employeeLast],
         (err, res) => {
           if (err) throw err;
-          console.log("The role has been updated\n");
-          console.table(res);
+          console.log("Employee's role ID updated")
           promptUser();
         }
       );
     });
 };
+
+const updateEmployeeManager = () => {
+    inquirer
+      .prompt([
+        {
+          name: "employeeFirst",
+          type: "input",
+          message:
+            "Please enter the first name of the employee you would like to update."
+        },
+        {
+          name: "employeeLast",
+          type: "input",
+          message:
+            "Please enter the last name of the employee you would like to update."
+        },
+        {
+          name: "managerID",
+          type: "input",
+          message: "Which manager ID would you like to update to?"
+        }
+      ])
+      .then(res => {
+        const query =
+          "UPDATE employee SET manager_id = ? WHERE first_name = ? AND last_name = ?";
+        connection.query(
+          query,
+          [res.managerID, res.employeeFirst, res.employeeLast],
+          (err, res) => {
+            if (err) throw err;
+            console.log("Employee's manager ID updated");
+            promptUser();
+          }
+        );
+      });
+  };

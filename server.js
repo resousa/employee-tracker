@@ -107,7 +107,7 @@ const viewAllDepartmentEmployees = () => {
       }
     ])
     .then(res => {
-      const query = "SELECT * FROM employees WHERE ?";
+      const query = "SELECT * FROM employee WHERE ?";
       connection.query(query, { id: res.viewByDepartment }, (err, res) => {
         if (err) throw err;
         console.table(res);
@@ -279,3 +279,12 @@ const updateEmployeeManager = () => {
         );
       });
   };
+
+  const viewAllRoles = () => {
+    const query = "SELECT * FROM role";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        promptUser();
+    });
+}

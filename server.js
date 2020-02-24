@@ -372,3 +372,22 @@ const addDepartment = () => {
       });
     });
 };
+
+const removeDepartment = () => {
+    inquirer.prompt([
+        {
+            name: "deleteDepartment",
+            type: "input",
+            message: "Please enter the department you would like to remove."
+        }
+    ])
+    .then(res => {
+        const query = "DELETE FROM department WHERE ?";
+        connection.query(query, { name: res.deleteDepartment }, (err, res) => {
+            if (err) throw err;
+            console.log("Department removed");
+            console.table(res);
+            promptUser();
+        });
+    });
+}

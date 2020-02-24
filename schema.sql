@@ -34,7 +34,7 @@ CREATE TABLE employee (
     CONSTRAINT fk_manager_id
     FOREIGN KEY (manager_id)
         REFERENCES employee(id)
-    );
+);
 
 SELECT * FROM employee;
 SELECT * FROM role;

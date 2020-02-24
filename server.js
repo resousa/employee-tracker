@@ -171,7 +171,7 @@ const addEmployee = () => {
 
       connection.query(query, userInput, (err, res) => {
         if (err) throw err;
-        console.log("employee added");
+        console.log("Employee added");
         promptUser();
       });
     });
@@ -201,7 +201,7 @@ const removeEmployee = () => {
         [res.removeEmployeeFirst, res.removeEmployeeLast],
         (err, res) => {
           if (err) throw err;
-          console.log("employee removed");
+          console.log("Employee removed");
           promptUser();
         }
       );
@@ -237,7 +237,7 @@ const updateEmployeeRole = () => {
         [res.roleID, res.employeeFirst, res.employeeLast],
         (err, res) => {
           if (err) throw err;
-          console.log("Employee's role ID updated")
+          console.log("Employee's role ID updated");
           promptUser();
         }
       );
@@ -245,46 +245,102 @@ const updateEmployeeRole = () => {
 };
 
 const updateEmployeeManager = () => {
-    inquirer
-      .prompt([
-        {
-          name: "employeeFirst",
-          type: "input",
-          message:
-            "Please enter the first name of the employee you would like to update."
-        },
-        {
-          name: "employeeLast",
-          type: "input",
-          message:
-            "Please enter the last name of the employee you would like to update."
-        },
-        {
-          name: "managerID",
-          type: "input",
-          message: "Which manager ID would you like to update to?"
+  inquirer
+    .prompt([
+      {
+        name: "employeeFirst",
+        type: "input",
+        message:
+          "Please enter the first name of the employee you would like to update."
+      },
+      {
+        name: "employeeLast",
+        type: "input",
+        message:
+          "Please enter the last name of the employee you would like to update."
+      },
+      {
+        name: "managerID",
+        type: "input",
+        message: "Please enter the id of the employee's manager."
+      }
+    ])
+    .then(res => {
+      const query =
+        "UPDATE employee SET manager_id = ? WHERE first_name = ? AND last_name = ?";
+      connection.query(
+        query,
+        [res.managerID, res.employeeFirst, res.employeeLast],
+        (err, res) => {
+          if (err) throw err;
+          console.log("Employee's manager ID updated");
+          promptUser();
         }
-      ])
-      .then(res => {
-        const query =
-          "UPDATE employee SET manager_id = ? WHERE first_name = ? AND last_name = ?";
-        connection.query(
-          query,
-          [res.managerID, res.employeeFirst, res.employeeLast],
-          (err, res) => {
-            if (err) throw err;
-            console.log("Employee's manager ID updated");
-            promptUser();
-          }
-        );
-      });
-  };
+      );
+    });
+};
 
-  const viewAllRoles = () => {
-    const query = "SELECT * FROM role";
-    connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.table(res);
-        promptUser();
+const viewAllRoles = () => {
+  const query = "SELECT * FROM role";
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    promptUser();
+  });
+};
+
+const addRole = () => {
+  inquirer
+    .prompt([
+      {
+        name: "roleTitle",
+        type: "input",
+        message: "Title of role:"
+      },
+      {
+        name: "roleSalary",
+        type: "input",
+        message: "Salary of role:"
+      },
+      {
+        name: "roleDepartmentID",
+        type: "input",
+        message: "Department ID of role:"
+      }
+    ])
+    .then(res => {
+      const query = "INSERT INTO role SET ?";
+      connection.query(
+        query,
+        {
+          title: res.roleTitle,
+          salary: res.roleSalary,
+          department_id: res.roleDepartmentID
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.log("New role created");
+          promptUser();
+        }
+      );
+    });
+};
+
+const removeRole = () => {
+    inquirer.prompt([
+        {
+            name: "deleteTitle",
+            type: "input",
+            message: "Please enter the title of the role you would like to remove."
+        }
+    ])
+    .then(res => {
+        const query = "DELETE FROM role WHERE ?";
+        connection.query(query, { title: res.deleteTitle }, (err, res) => {
+            if (err) throw err;
+            console.log("Role removed");
+            console.table(res);
+            promptUser();
+        });
     });
 }

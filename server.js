@@ -327,20 +327,29 @@ const addRole = () => {
 };
 
 const removeRole = () => {
-    inquirer.prompt([
-        {
-            name: "deleteTitle",
-            type: "input",
-            message: "Please enter the title of the role you would like to remove."
-        }
+  inquirer
+    .prompt([
+      {
+        name: "deleteTitle",
+        type: "input",
+        message: "Please enter the title of the role you would like to remove."
+      }
     ])
     .then(res => {
-        const query = "DELETE FROM role WHERE ?";
-        connection.query(query, { title: res.deleteTitle }, (err, res) => {
-            if (err) throw err;
-            console.log("Role removed");
-            console.table(res);
-            promptUser();
-        });
+      const query = "DELETE FROM role WHERE ?";
+      connection.query(query, { title: res.deleteTitle }, (err, res) => {
+        if (err) throw err;
+        console.log("Role removed");
+        promptUser();
+      });
     });
-}
+};
+
+const viewAllDepartments = () => {
+  const query = "SELECT * FROM department";
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    promptUser();
+  });
+};

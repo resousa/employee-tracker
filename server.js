@@ -262,7 +262,7 @@ const updateEmployeeManager = () => {
       {
         name: "managerID",
         type: "input",
-        message: "Please enter the id of the employee's manager."
+        message: "Please enter the id of the employee's new manager."
       }
     ])
     .then(res => {
@@ -352,4 +352,23 @@ const viewAllDepartments = () => {
     console.table(res);
     promptUser();
   });
+};
+
+const addDepartment = () => {
+  inquirer
+    .prompt([
+      {
+        name: "newDepartment",
+        type: "input",
+        message: "Please enter the department you would like to add."
+      }
+    ])
+    .then(res => {
+      const query = "INSERT INTO department SET ?";
+      connection.query(query, { name: res.newDepartment }, (err, res) => {
+        if (err) throw err;
+        console.log("Department added");
+        promptUser();
+      });
+    });
 };

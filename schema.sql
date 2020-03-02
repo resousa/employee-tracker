@@ -30,7 +30,7 @@ CREATE TABLE employee (
     PRIMARY KEY (id),
     CONSTRAINT fk_role_id
     FOREIGN KEY (role_id) 
-        REFERENCES role(id)
+        REFERENCES role(id),
     CONSTRAINT fk_manager_id
     FOREIGN KEY (manager_id)
         REFERENCES employee(id)

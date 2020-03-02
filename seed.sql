@@ -6,3 +6,7 @@ VALUES ("Sales Manager", 125000, 1), ("Sales Agent", 75000, 1), ("Marketing Mana
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Bill", "Francis", 1, null), ("Brett", "Schwab", 2, 1), ("Alexis", "Ames", 2, 1), ("Jen", "Alberts", 3, null), ("Nancy", "Devans", 4, 3), ("Randy", "Scotts", 4, 3), ("Rob", "Stacks", 5, null), ("Fran", "Gains", 6, 5), ("Tim", "Timms", 7, null), ("Jessica", "Days", 8, 7), ("Fred", "Nights", 8, 7), ("Lawyer", "Mclawyerface", 9, null);
+
+SELECT * FROM employee;
+SELECT * FROM role;
+SELECT * FROM department;
